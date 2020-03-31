@@ -1,0 +1,93 @@
+---
+- hosts: localhost
+  become: yes
+  roles:
+  - kewlfft.aur
+  vars:
+    packages:
+      - chromium
+      - composer
+      - docker
+      - firefox
+      - forticlientsslvpn
+      - heroku-cli
+      - htop
+      - php
+      - php-apache
+      - php-gd
+      - php-imap
+      - php-pgsql
+      - postgresql
+      - python-pipenv
+      - sqlitebrowser
+      - timeshift
+      - transmission-qt
+      - vim
+      - virtualbox
+      - visual-studio-code-bin
+      - watchman
+      - yarn
+      - zsh
+      
+    php_extensions:
+      - curl
+      - mysqli
+      - pdo_mysql
+      - pgsql
+      - pdo_pgsql
+      - zip
+  
+  handlers:
+  - name: restart httpd
+    service:
+      name: httpd
+      state: restarted
+
+  tasks:
+#   - name: full system upgrade
+#     pacman:
+#       update_cache: yes
+#       upgrade: yes
+
+  - name: install packages
+    package: 
+      name: "{{ packages }}"
+      state: latest
+
+  - name: comment mod_mpm_event
+    lineinfile:
+      path: /etc/httpd/conf/httpd.conf
+      regexp: "^LoadModule mpm_event_module modules/mod_mpm_event.so$"
+      line: "#LoadModule mpm_event_module modules/mod_mpm_event.so"
+
+  - name: uncomment mod_prefork
+    lineinfile:
+      path: /etc/httpd/conf/httpd.conf
+      regexp: "^#LoadModule mpm_prefork_module modules/mod_mpm_prefork.so$"
+      line: "LoadModule mpm_prefork_module modules/mod_mpm_prefork.so"
+
+  - name: uncomment mod_prefork
+    blockinfile:
+      path: /etc/httpd/conf/httpd.conf
+      insertafter: "^#LoadModule"
+      block: |
+        LoadModule php7_module modules/libphp7.so
+        AddHandler php7-script .php
+
+  - name: include php7_module line
+    lineinfile:
+      path: /etc/httpd/conf/httpd.conf
+      line: Include conf/extra/php7_module.conf
+    notify:
+    - restart httpd
+      
+  - name: enable php extensions
+    lineinfile:
+      path: /etc/php/php.ini
+      line: extension={{ item }}
+    with_items: "{{ php_extensions }}"
+    notify:
+    - restart httpd
+
+      
+
