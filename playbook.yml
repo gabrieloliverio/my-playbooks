@@ -12,6 +12,7 @@
       - forticlientsslvpn
       - heroku-cli
       - htop
+      - mariadb
       - php
       - php-apache
       - php-gd
@@ -89,5 +90,7 @@
     notify:
     - restart httpd
 
+  - name: configure mysql
+    command: mariadb-install-db --user=mysql --basedir=/usr --datadir=/var/lib/mysql
       
 
