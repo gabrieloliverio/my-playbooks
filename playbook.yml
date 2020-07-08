@@ -1,15 +1,14 @@
 ---
 - hosts: localhost
   become: yes
-  roles:
-  - kewlfft.aur
   vars:
     packages:
-      - chromium
+      - firefox
+      - firefox-developer-edition
       - composer
       - docker
-      - firefox
       - forticlientsslvpn
+      - git
       - heroku-cli
       - htop
       - mariadb
@@ -18,6 +17,8 @@
       - php-gd
       - php-imap
       - php-pgsql
+      - php-redis
+      - redis
       - postgresql
       - python-pipenv
       - sqlitebrowser
@@ -37,6 +38,8 @@
       - pgsql
       - pdo_pgsql
       - zip
+      - igbinary
+      - redis
   
   handlers:
   - name: restart httpd
