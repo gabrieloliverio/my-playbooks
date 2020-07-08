@@ -48,10 +48,10 @@
       state: restarted
 
   tasks:
-#   - name: full system upgrade
-#     pacman:
-#       update_cache: yes
-#       upgrade: yes
+  - name: full system upgrade
+    pacman:
+      update_cache: yes
+      upgrade: yes
 
   - name: install packages
     package: 
@@ -95,5 +95,3 @@
 
   - name: configure mysql
     command: mariadb-install-db --user=mysql --basedir=/usr --datadir=/var/lib/mysql
-      
-
