@@ -1,6 +1,5 @@
 ---
 - hosts: localhost
-  become: yes
   vars:
     packages:
       - firefox-developer-edition
@@ -32,16 +31,19 @@
   
   tasks:
   - name: full system upgrade
+    become: yes
     pacman:
       update_cache: yes
       upgrade: yes
 
   - name: install packages
+    become: yes
     package: 
       name: "{{ packages }}"
       state: latest
 
   - name: enable php extensions
+    become: yes
     lineinfile:
       path: /etc/php/php.ini
       line: extension={{ item }}
