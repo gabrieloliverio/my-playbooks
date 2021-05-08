@@ -15,6 +15,7 @@
       - postgresql
       - python-pipenv
       - rubygems
+      - tilix
       - transmission-qt
       - vim
       - virtualbox
@@ -28,6 +29,10 @@
       - pdo_pgsql
       - zip
       - igbinary
+
+    python_packages:
+      - flake8
+      - mypy
   
   tasks:
   - name: full system upgrade
@@ -42,9 +47,16 @@
       name: "{{ packages }}"
       state: latest
 
+  - name: install python packages
+    pip:
+      name: "{{ python_packages }}"
+      state: latest
+    tags: [python]
+
   - name: enable php extensions
     become: yes
     lineinfile:
       path: /etc/php/php.ini
       line: extension={{ item }}
     with_items: "{{ php_extensions }}"
+    tags: [php]
