@@ -41,12 +41,14 @@
     pacman:
       update_cache: yes
       upgrade: yes
+    tags: [system]
 
   - name: install packages
     become: yes
     package: 
       name: "{{ packages }}"
       state: latest
+    tags: [system]
 
   - name: install python packages
     pip:
