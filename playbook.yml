@@ -17,6 +17,7 @@
       - rubygems
       - tilix
       - transmission-qt
+      - tree
       - vim
       - virtualbox
       - yarn
