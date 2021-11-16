@@ -2,6 +2,9 @@
 - hosts: localhost
   vars:
     packages:
+      - bind
+      - bitwarden
+      - bitwarden-cli
       - firefox-developer-edition
       - composer
       - docker
@@ -13,7 +16,9 @@
       - php-pgsql
       - php-sqlite
       - postgresql
+      - python-adblock
       - python-pipenv
+      - qutebrowser
       - rubygems
       - tilix
       - transmission-qt
@@ -23,6 +28,9 @@
       - yarn
       - watchexec
       - zsh
+
+    aur_packages:
+      - chromium-widevine # to play media in qutebrowser
       
     php_extensions:
       - curl
@@ -43,12 +51,38 @@
       upgrade: yes
     tags: [system]
 
+  - name: Create the `aur_builder` user
+    become: yes
+    ansible.builtin.user:
+      name: aur_builder
+      create_home: yes
+      group: wheel
+    tags: [aur, system]
+
+  - name: allow the `aur_builder` user to run `sudo pacman` without a password
+    become: yes
+    ansible.builtin.lineinfile:
+      path: /etc/sudoers.d/11-install-aur_builder
+      line: 'aur_builder ALL=(ALL) NOPASSWD: /usr/bin/pacman'
+      create: yes
+      validate: 'visudo -cf %s'
+    tags: [aur, system]
+
   - name: install packages
     become: yes
     package: 
       name: "{{ packages }}"
       state: latest
     tags: [system]
+
+  - name: install AUR packeges
+    kewlfft.aur.aur:
+      name: "{{ aur_packages }}"
+      state: present
+      aur_only: yes
+    become: yes
+    become_user: aur_builder
+    tags: [aur, system]
 
   - name: install python packages
     pip:
