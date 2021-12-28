@@ -5,33 +5,29 @@
       - bind
       - bitwarden
       - bitwarden-cli
-      - firefox-developer-edition
+      - cargo
       - composer
       - docker
-      - git
-      - heroku-cli
       - htop
+      - neovim
+      - npm
       - php
       - php-gd
+      - php-igbinary
       - php-pgsql
       - php-sqlite
+      - python-pip
       - postgresql
-      - python-adblock
-      - python-pipenv
-      - qutebrowser
+      - ripgrep
       - rubygems
       - tilix
       - transmission-qt
       - tree
       - vim
       - virtualbox
-      - yarn
       - watchexec
       - zsh
 
-    aur_packages:
-      - chromium-widevine # to play media in qutebrowser
-      
     php_extensions:
       - curl
       - pgsql
@@ -51,38 +47,12 @@
       upgrade: yes
     tags: [system]
 
-  - name: Create the `aur_builder` user
-    become: yes
-    ansible.builtin.user:
-      name: aur_builder
-      create_home: yes
-      group: wheel
-    tags: [aur, system]
-
-  - name: allow the `aur_builder` user to run `sudo pacman` without a password
-    become: yes
-    ansible.builtin.lineinfile:
-      path: /etc/sudoers.d/11-install-aur_builder
-      line: 'aur_builder ALL=(ALL) NOPASSWD: /usr/bin/pacman'
-      create: yes
-      validate: 'visudo -cf %s'
-    tags: [aur, system]
-
   - name: install packages
     become: yes
     package: 
       name: "{{ packages }}"
       state: latest
-    tags: [system]
-
-  - name: install AUR packeges
-    kewlfft.aur.aur:
-      name: "{{ aur_packages }}"
-      state: present
-      aur_only: yes
-    become: yes
-    become_user: aur_builder
-    tags: [aur, system]
+    tags: [packages]
 
   - name: install python packages
     pip:
@@ -97,3 +67,53 @@
       line: extension={{ item }}
     with_items: "{{ php_extensions }}"
     tags: [php]
+
+  - name: create alternative npm directory
+    file:
+      state: directory
+      path: ~/.npm-global
+    tags: [node]
+
+  - name: configure npm prefix
+    shell: npm config set prefix "~/.npm-global"
+    args:
+      executable: /usr/bin/zsh
+    tags: [node]
+
+  - name: add ~/.npm-global to PATH
+    lineinfile:
+      regexp: ^PATH=~/.npm-global 
+      line: PATH=~/.npm-global/bin:$PATH
+      path: ~/.zshrc
+    tags: [node]
+
+  - name: install lunar vim
+    shell: yes no | bash <(curl -s https://raw.githubusercontent.com/lunarvim/lunarvim/master/utils/installer/install.sh)
+    args:
+      chdir: /tmp
+      executable: /bin/bash
+    tags: [vim]
+
+  - name: copy vim config file
+    get_url:
+      url: https://raw.githubusercontent.com/gabrieloliverio/dotfiles/main/.vimrc
+      dest: ~/.vimrc
+      mode: '0644'
+    tags: [vim]
+
+  - name: copy .gitconfig file
+    get_url:
+      url: https://raw.githubusercontent.com/gabrieloliverio/dotfiles/main/.gitconfig
+      dest: ~/.gitconfig
+      mode: '0644'
+    tags: [git]
+
+  - name: source vte.sh in .zshrc for Tilix
+    blockinfile:
+      path: ~/.zshrc
+      block: |
+        if [ $TILIX_ID ] || [ $VTE_VERSION ]; then
+            source /etc/profile.d/vte.sh
+        fi
+    tags: [tilix]
+
