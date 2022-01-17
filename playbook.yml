@@ -8,6 +8,7 @@
       - cargo
       - composer
       - docker
+      - gnu-netcat
       - htop
       - neovim
       - npm
@@ -25,6 +26,7 @@
       - tree
       - vim
       - virtualbox
+      - vlc
       - watchexec
       - zsh
 
