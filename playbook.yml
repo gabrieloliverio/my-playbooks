@@ -70,6 +70,14 @@
     with_items: "{{ php_extensions }}"
     tags: [php]
 
+  - name: install php-cs-fixer
+    become: yes
+    get_url:
+      url: https://cs.symfony.com/download/php-cs-fixer-v3.phar
+      dest: /usr/local/bin/php-cs-fixer
+      mode: '0755'
+    tags: [php]
+
   - name: create alternative npm directory
     file:
       state: directory
