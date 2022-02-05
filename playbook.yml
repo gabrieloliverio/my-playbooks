@@ -119,3 +119,7 @@
         fi
     tags: [tilix]
 
+  - name: install heroku-cli
+    shell: curl https://cli-assets.heroku.com/install.sh | sh
+    tags: [heroku]
+
