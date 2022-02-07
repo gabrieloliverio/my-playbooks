@@ -10,6 +10,7 @@
       - docker
       - gnu-netcat
       - htop
+      - lib32-pam
       - neovim
       - npm
       - php
