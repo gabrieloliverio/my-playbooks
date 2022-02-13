@@ -13,11 +13,11 @@
       - lib32-pam
       - neovim
       - npm
-      - php
-      - php-gd
-      - php-igbinary
-      - php-pgsql
-      - php-sqlite
+      - php7
+      - php7-gd
+      - php7-igbinary
+      - php7-pgsql
+      - php7-sqlite
       - python-pip
       - postgresql
       - ripgrep
@@ -29,7 +29,6 @@
       - virtualbox
       - vlc
       - watchexec
-      - zsh
 
     php_extensions:
       - curl
