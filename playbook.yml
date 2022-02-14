@@ -119,6 +119,13 @@
       mode: '0644'
     tags: [git]
 
+  - name: copy lunarvim config file
+    get_url:
+      url: https://raw.githubusercontent.com/gabrieloliverio/dotfiles/main/config.lua
+      dest: ~/.config/lvim/config.lua
+      mode: '0644'
+    tags: [vim]
+
   - name: source vte.sh in .zshrc for Tilix
     blockinfile:
       path: ~/.zshrc
