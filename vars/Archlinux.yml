@@ -1,0 +1,29 @@
+---
+packages:
+  - bat
+  - bind
+  - bitwarden
+  - bitwarden-cli
+  - curl
+  - docker
+  - docker-compose
+  - fzf
+  - gnu-netcat
+  - htop
+  - jq
+  - mlocate
+  - neovim
+  - npm
+  - python-pip
+  - postgresql
+  - re2c
+  - ripgrep
+  - rubygems
+  - rust
+  - tilix
+  - transmission-qt
+  - tree
+  - vim
+  - virtualbox
+  - vlc
+  - watchexec

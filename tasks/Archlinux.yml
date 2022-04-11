@@ -1,0 +1,13 @@
+- name: Full system upgrade
+  become: true
+  pacman:
+    update_cache: yes
+    upgrade: yes
+  tags: [system]
+
+- name: Install packages
+  become: true
+  package: 
+    name: "{{ packages }}"
+    state: latest
+  tags: [packages]

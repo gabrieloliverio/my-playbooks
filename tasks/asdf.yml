@@ -1,0 +1,29 @@
+- name: Download asdf
+  shell: git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.9.0
+  args:
+    creates: ~/.asdf
+
+- name: Enables asdf for zsh
+  lineinfile:
+    regexp: ^. $HOME/.asdf/asdf.sh
+    line: . $HOME/.asdf/asdf.sh
+    path: ~/.zshrc
+
+- name: Add nodejs plugin
+  shell: ~/.asdf/bin/asdf plugin-add nodejs git@github.com:asdf-vm/asdf-nodejs.git || /bin/true
+
+- name: Add php plugin
+  shell: ~/.asdf/bin/asdf plugin-add php https://github.com/asdf-community/asdf-php.git || /bin/true
+
+- name: Install php versions
+  shell: ~/.asdf/bin/asdf install php 8.1.4 7.4.28
+
+- name: Set php 8 as default global
+  shell: ~/.asdf/bin/asdf global php 8.1.4
+
+- name: Install php extensions
+  command: pecl install {{ item }}
+  with_items: 
+  - igbinary
+    
+    
