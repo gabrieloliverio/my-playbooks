@@ -10,6 +10,25 @@
       file: "tasks/Archlinux.yml"
     when: ansible_distribution == 'Archlinux'
 
+  - name: Include Ubuntu-specific tasks
+    import_tasks:
+      file: "tasks/Ubuntu.yml"
+    when: ansible_distribution == 'Ubuntu'
+
+  - name: Get .gitconfig file
+    get_url:
+      url: https://raw.githubusercontent.com/gabrieloliverio/dotfiles/main/.gitconfig
+      dest: ~/.gitconfig
+      mode: '0644'
+    tags: [git]
+
+  - name: Get .zshrc file
+    get_url:
+      url: https://raw.githubusercontent.com/gabrieloliverio/dotfiles/main/.zshrc
+      dest: ~/.zshrc
+      mode: '0644'
+    tags: [zsh]
+
   - name: Import vim tasks
     import_tasks:
       file: "tasks/vim.yml"
@@ -20,52 +39,15 @@
       file: "tasks/asdf.yml"
     tags: [asdf]
 
-  - name: Source vte.sh in .zshrc for Tilix
-    blockinfile:
-      path: ~/.zshrc
-      block: |
-        if [ $TILIX_ID ] || [ $VTE_VERSION ]; then
-            source /etc/profile.d/vte.sh
-        fi
-    tags: [tilix]
-
-  - name: install heroku-cli
+  - name: Install heroku-cli
+    become: true
     shell: curl https://cli-assets.heroku.com/install.sh | sh
     tags: [heroku]
 
-# vars:
-#   php_extensions:
-#     - curl
-#     - pgsql
-#     - pdo_pgsql
-#     - zip
-#     - igbinary
-
-#   python_packages:
-#     - flake8
-#     - mypy
-
-
-
-# - name: Install python packages
-#   pip:
-#     name: "{{ python_packages }}"
-#     state: latest
-#   tags: [python]
-
-# - name: install php-cs-fixer
-#   become: yes
-#   get_url:
-#     url: https://cs.symfony.com/download/php-cs-fixer-v3.phar
-#     dest: /usr/local/bin/php-cs-fixer
-#     mode: '0755'
-#   tags: [php]
-
-# - name: copy .gitconfig file
-#   get_url:
-#     url: https://raw.githubusercontent.com/gabrieloliverio/dotfiles/main/.gitconfig
-#     dest: ~/.gitconfig
-#     mode: '0644'
-#   tags: [git]
-
-
+  - name: Install php-cs-fixer
+    become: true
+    get_url:
+      url: https://cs.symfony.com/download/php-cs-fixer-v3.phar
+      dest: /usr/local/bin/php-cs-fixer
+      mode: '0755'
+    tags: [php]

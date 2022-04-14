@@ -1,0 +1,36 @@
+- name: Full system upgrade
+  become: true
+  apt:
+    update_cache: yes
+    upgrade: yes
+  tags: [system]
+
+- name: Add neovim PPA
+  become: true
+  apt_repository:
+    repo: ppa:neovim-ppa/stable
+  tags: [packages]
+
+- name: Install packages
+  become: true
+  package: 
+    name: "{{ packages }}"
+    state: latest
+  tags: [packages]
+
+- name: Is oh-my-zsh installed?
+  stat:
+    path: $HOME/.oh-my-zsh
+  register: oh_my_zsh
+  tags: [zsh]
+
+- name: Install oh-my-zsh
+  shell: sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+  when: not oh_my_zsh.stat.exists
+  tags: [zsh] 
+
+- name: Clone plugin zsh-auto-suggestions
+  git:
+    repo: https://github.com/zsh-users/zsh-autosuggestions
+    dest: ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions
+  tags: [zsh]
