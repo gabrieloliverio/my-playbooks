@@ -6,6 +6,7 @@ packages:
   - docker
   - docker-compose
   - fzf
+  - git-lfs
   - libcurl4-openssl-dev
   - libgd-dev
   - libonig-dev
