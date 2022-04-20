@@ -15,6 +15,14 @@
       file: "tasks/Ubuntu.yml"
     when: ansible_distribution == 'Ubuntu'
 
+  - name: Append group docker to my user
+    become: true
+    user:
+      name: gabriel
+      groups: docker
+      append: yes
+    tags: [user, docker]
+
   - name: Get .gitconfig file
     get_url:
       url: https://raw.githubusercontent.com/gabrieloliverio/dotfiles/main/.gitconfig
