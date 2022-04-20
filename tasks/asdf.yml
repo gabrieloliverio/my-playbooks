@@ -13,7 +13,7 @@
   shell: ~/.asdf/bin/asdf install php 8.1.4 7.4.28
 
 - name: Set php 8 as default global
-  shell: ~/.asdf/bin/asdf global php 8.1.4
+  shell: ~/.asdf/bin/asdf global php 7.4.28
 
 - name: Reshim PHP
   shell: ~/.asdf/bin/asdf reshim php
