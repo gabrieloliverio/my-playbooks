@@ -3,6 +3,7 @@ packages:
   - bat
   - bison
   - curl
+  - dbeaver-ce
   - docker
   - docker-compose
   - fzf
