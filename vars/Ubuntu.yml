@@ -16,6 +16,7 @@ packages:
   - libxml2-dev
   - libzip-dev
   - libsqlite3-dev
+  - mariadb-client
   - net-tools
   - netcat
   - htop
