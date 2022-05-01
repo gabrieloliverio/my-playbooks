@@ -59,3 +59,11 @@
       dest: /usr/local/bin/php-cs-fixer
       mode: '0755'
     tags: [php]
+
+  - name: Install psysh
+    become: true
+    get_url:
+      url: https://psysh.org/psysh
+      dest: /usr/local/bin/psysh
+      mode: '0755'
+    tags: [php]
