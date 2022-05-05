@@ -3,20 +3,22 @@ packages:
   - bat
   - bison
   - curl
-  - dbeaver-ce
   - docker
   - docker-compose
   - fzf
   - git-lfs
   - libcurl4-openssl-dev
   - libgd-dev
+  - libgl1-mesa-glx
   - libonig-dev
-  - libpq-dev
   - libreadline-dev
+  - libsqlite3-dev
+  - libpq-dev
+  - libxcb-xtest0
   - libxml2-dev
   - libzip-dev
-  - libsqlite3-dev
   - mariadb-client
+  - meld
   - net-tools
   - netcat
   - htop
@@ -28,6 +30,7 @@ packages:
   - re2c
   - ripgrep
   - rustc
+  - sassc
   - sqlite
   - sqlite3
   - tilix
