@@ -7,6 +7,9 @@ packages:
   - docker-compose
   - fzf
   - git-lfs
+  - httpie
+  - htop
+  - jq
   - libcurl4-openssl-dev
   - libgd-dev
   - libgl1-mesa-glx
@@ -21,8 +24,6 @@ packages:
   - meld
   - net-tools
   - netcat
-  - htop
-  - jq
   - mlocate
   - neovim
   - python3-venv
@@ -33,6 +34,7 @@ packages:
   - sassc
   - sqlite
   - sqlite3
+  - tig
   - tilix
   - tree
   - vim

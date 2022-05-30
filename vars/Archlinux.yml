@@ -9,6 +9,7 @@ packages:
   - docker-compose
   - fzf
   - gnu-netcat
+  - httpie
   - htop
   - jq
   - mlocate
@@ -21,6 +22,7 @@ packages:
   - ripgrep
   - rubygems
   - rust
+  - tig
   - tilix
   - transmission-qt
   - tree
