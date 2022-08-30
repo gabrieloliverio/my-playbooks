@@ -10,10 +10,10 @@
   shell: ~/.asdf/bin/asdf plugin-add php https://github.com/asdf-community/asdf-php.git || /bin/true
 
 - name: Install php versions
-  shell: ~/.asdf/bin/asdf install php 8.1.4 7.4.28
+  shell: ~/.asdf/bin/asdf install php 8.1.9 7.4.28
 
 - name: Set php 8 as default global
-  shell: ~/.asdf/bin/asdf global php 7.4.28
+  shell: ~/.asdf/bin/asdf global php 8.1.9
 
 - name: Reshim PHP
   shell: ~/.asdf/bin/asdf reshim php
