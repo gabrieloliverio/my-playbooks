@@ -37,6 +37,14 @@
       mode: '0644'
     tags: [zsh]
 
+  - name: Symlink vte.sh file
+    become: true
+    file:
+      state: link
+      src: /etc/profile.d/vte-2.91.sh 
+      dest: /etc/profile.d/vte.sh
+    tags: [vte]
+
   - name: Import vim tasks
     import_tasks:
       file: "tasks/vim.yml"
