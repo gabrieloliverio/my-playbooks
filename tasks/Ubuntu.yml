@@ -52,3 +52,16 @@
   apt:
     deb: https://dbeaver.io/files/dbeaver-ce_latest_amd64.deb
   tags: [packages, dbeaver]
+
+- name: Download VSCode
+  become: true
+  get_url:
+    url: https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64
+    dest: /tmp/vscode.deb
+  tags: [code]
+
+- name: Install VSCode
+  become: true
+  apt:
+    deb: /tmp/vscode.deb
+  tags: [code]
