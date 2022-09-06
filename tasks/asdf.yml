@@ -19,10 +19,10 @@
   shell: ~/.asdf/bin/asdf reshim php
 
 - name: Install nodejs
-  shell: ~/.asdf/bin/asdf install nodejs 17.9.0
+  shell: ~/.asdf/bin/asdf install nodejs 16.17.0
 
 - name: Set nodejs as default global
-  shell: ~/.asdf/bin/asdf global nodejs 17.9.0
+  shell: ~/.asdf/bin/asdf global nodejs 16.17.0
 
 - name: Reshim nodejs
   shell: ~/.asdf/bin/asdf reshim nodejs
